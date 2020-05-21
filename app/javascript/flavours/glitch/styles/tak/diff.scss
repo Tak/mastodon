@@ -1,0 +1,9 @@
+.button,
+.btn {
+  border-radius: 8px 0 8px 0;
+  border-corner-shape: bevel;
+  &.button-primary {
+    border-radius: 8px 0 8px 0;
+    border-corner-shape: bevel;
+  }
+}
