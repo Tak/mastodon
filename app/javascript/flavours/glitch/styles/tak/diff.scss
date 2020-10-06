@@ -7,3 +7,65 @@
     border-corner-shape: bevel;
   }
 }
+
+.star-icon,
+.icon-button {
+  &.active {
+    color: $ui-primary-color;
+  }
+}
+
+// Fix the modal colors
+.actions-modal,
+.boost-modal,
+.confirmation-modal,
+.mute-modal,
+.block-modal,
+.report-modal,
+.embed-modal {
+  background: darken($ui-base-color, 6%);
+  color: $primary-text-color;
+
+  .status.light {
+     .status__content {
+      color: $primary-text-color;
+    }
+  }
+}
+
+.boost-modal__action-bar,
+.favourite-modal__action-bar,
+.confirmation-modal__action-bar,
+.mute-modal__action-bar,
+.block-modal__action-bar {
+  background: darken($ui-base-color, 6%);
+  color: $dark-text-color;
+}
+
+.error-modal,
+.onboarding-modal,
+.onboarding-modal__paginator,
+.error-modal__footer {
+  background: darken($ui-base-color, 6%);
+  color: $primary-text-color;
+
+  .onboarding-modal__nav,
+  .error-modal__nav {
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $action-button-color;
+    }
+
+    &.onboarding-modal__done,
+    &.onboarding-modal__next {
+      color: $primary-text-color;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: $primary-text-color;
+      }
+    }
+  }
+}
