@@ -8,6 +8,9 @@ User=mastodon
 WorkingDirectory=/home/mastodon/live
 Environment="RAILS_ENV=production"
 Environment="PORT=3000"
+Environment="MAX_TOOT_CHARS=1024"
+Environment="GITHUB_REPOSITORY=Tak/mastodon"
+Environment="SOURCE_TAG=taks-garden-live"
 ExecStart=/home/mastodon/.rbenv/shims/bundle exec puma -C config/puma.rb
 ExecReload=/bin/kill -SIGUSR1 $MAINPID
 TimeoutSec=15
