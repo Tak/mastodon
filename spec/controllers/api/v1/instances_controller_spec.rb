@@ -18,5 +18,12 @@ RSpec.describe Api::V1::InstancesController, type: :controller do
 
       expect(response).to have_http_status(200)
     end
+
+    it 'advertises local-only capability' do
+      get :show
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to match(/.*local_only_posts.:true.*/)
+    end
   end
 end
