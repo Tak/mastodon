@@ -1,0 +1,13 @@
+[Unit]
+Description=Schedule pruning of mastodon media
+RefuseManualStart=no  # Allow manual starts
+RefuseManualStop=no   # Allow manual stops
+
+[Timer]
+#Run once per week
+OnCalendar=Monthly
+#File describing job to execute
+Unit=mastodon_remove_orphaned_media.service
+
+[Install]
+WantedBy=timers.target

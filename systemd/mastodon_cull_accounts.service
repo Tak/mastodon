@@ -1,0 +1,13 @@
+[Unit]
+Description=Cull inactive accounts on mastodon
+
+[Service]
+Type=simple
+ExecStart=/home/mastodon/.rbenv/shims/bundle exec bin/tootctl accounts cull
+User=mastodon
+Group=mastodon
+WorkingDirectory=/home/mastodon/live
+Environment=RAILS_ENV=production
+
+[Install]
+WantedBy=multi-user.target

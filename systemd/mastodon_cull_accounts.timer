@@ -1,0 +1,13 @@
+[Unit]
+Description=Schedule culling of mastodon accounts
+RefuseManualStart=no  # Allow manual starts
+RefuseManualStop=no   # Allow manual stops
+
+[Timer]
+#Run once per month
+OnCalendar=*-*-15
+#File describing job to execute
+Unit=mastodon_cull_accounts.service
+
+[Install]
+WantedBy=timers.target

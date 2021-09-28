@@ -1,0 +1,13 @@
+[Unit]
+Description=Prune preview_cards on mastodon
+
+[Service]
+Type=simple
+ExecStart=/home/mastodon/.rbenv/shims/bundle exec bin/tootctl preview_cards remove
+User=mastodon
+Group=mastodon
+WorkingDirectory=/home/mastodon/live
+Environment=RAILS_ENV=production
+
+[Install]
+WantedBy=multi-user.target
