@@ -69,3 +69,65 @@
     }
   }
 }
+
+.compose-form__autosuggest-wrapper,
+.poll__option input[type='text'],
+.compose-form .spoiler-input__input,
+.compose-form__poll-wrapper select,
+.search__input,
+.setting-text,
+.report-dialog-modal__textarea,
+.audio-player {
+  border: 1px solid lighten($ui-base-color, 8%);
+}
+
+// Change the colors used in compose-form
+.compose-form {
+//   .compose-form__modifiers {
+//     .compose-form__upload__actions .icon-button,
+//     .compose-form__upload__warning .icon-button {
+//       color: lighten($white, 7%);
+// 
+//       &:active,
+//       &:focus,
+//       &:hover {
+//         color: $white;
+//       }
+//     }
+//   }
+
+  .compose-form__modifiers,
+  .compose-form__buttons-wrapper, {
+    background: lighten($ui-base-color, 4%);
+  }
+
+  .poll__option input[type='text'],
+  .autosuggest-input,
+  .spoiler-input__input,
+  .privacy-dropdown__dropdown,
+  .privacy-dropdown__option,
+  .privacy-dropdown__option__content,
+  .emoji-mart-scroll,
+  .emoji-picker-dropdown__menu,
+  .language-dropdown__dropdown__results,
+  .language-dropdown__dropdown__results__item,
+  .autosuggest-textarea__suggestions,
+  .autosuggest-textarea__textarea {
+    background: lighten($ui-base-color, 4%) !important;
+    color: $darker-text-color !important;
+    border-radius: 0 0 0 0 !important;
+    &::placeholder {
+      color: lighten($darker-text-color, 4%) !important;
+    }
+  }
+
+  .autosuggest-textarea__suggestions__item {
+    &:hover,
+    &:focus,
+    &:active,
+    &.selected {
+      background: lighten($ui-base-color, 4%);
+    }
+  }
+}
+
