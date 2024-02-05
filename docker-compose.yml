@@ -6,24 +6,26 @@ services:
     restart: always
     image: postgres:14-alpine
     shm_size: 256mb
-    networks:
-      - internal_network
     healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'postgres']
+      test: ['CMD', 'pg_isready', '-U', 'mastodon', '-d', 'mastodon_production']
     volumes:
       - ./postgres14:/var/lib/postgresql/data
     environment:
       - 'POSTGRES_HOST_AUTH_METHOD=trust'
+      - 'POSTGRES_USER=mastodon'
+      - 'POSTGRES_DB=mastodon_production'
+    ports:
+      - 5555:5432
 
-  redis:
-    restart: always
-    image: redis:7-alpine
-    networks:
-      - internal_network
-    healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
-    volumes:
-      - ./redis:/data
+        # redis:
+        #   restart: always
+        #   image: redis:7-alpine
+        #   networks:
+        #     - internal_network
+        #   healthcheck:
+        #     test: ['CMD', 'redis-cli', 'ping']
+        #   volumes:
+        #     - ./redis:/data
 
   # es:
   #   restart: always
@@ -56,66 +58,61 @@ services:
   #   ports:
   #     - '127.0.0.1:9200:9200'
 
-  web:
-    # You can uncomment the following line if you want to not use the prebuilt image, for example if you have local code changes
-    # build: .
-    image: ghcr.io/mastodon/mastodon:v4.3.6
-    restart: always
-    env_file: .env.production
-    command: bundle exec puma -C config/puma.rb
-    networks:
-      - external_network
-      - internal_network
-    healthcheck:
-      # prettier-ignore
-      test: ['CMD-SHELL',"curl -s --noproxy localhost localhost:3000/health | grep -q 'OK' || exit 1"]
-    ports:
-      - '127.0.0.1:3000:3000'
-    depends_on:
-      - db
-      - redis
-      # - es
-    volumes:
-      - ./public/system:/mastodon/public/system
+        # web:
+        #   build: .
+        #   image: ghcr.io/mastodon/mastodon:v4.3.6
+        #   restart: always
+        #   env_file: .env.production
+        #   command: bundle exec puma -C config/puma.rb
+        #   networks:
+        #     - external_network
+        #     - internal_network
+        #   healthcheck:
+        #     # prettier-ignore
+        #     test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
+        #   ports:
+        #     - '127.0.0.1:3000:3000'
+        #   depends_on:
+        #     - db
+        #     - redis
+        #     # - es
+        #   volumes:
+        #     - ./public/system:/mastodon/public/system
 
-  streaming:
-    # You can uncomment the following lines if you want to not use the prebuilt image, for example if you have local code changes
-    # build:
-    #   dockerfile: ./streaming/Dockerfile
-    #   context: .
-    image: ghcr.io/mastodon/mastodon-streaming:v4.3.6
-    restart: always
-    env_file: .env.production
-    command: node ./streaming/index.js
-    networks:
-      - external_network
-      - internal_network
-    healthcheck:
-      # prettier-ignore
-      test: ['CMD-SHELL', "curl -s --noproxy localhost localhost:4000/api/v1/streaming/health | grep -q 'OK' || exit 1"]
-    ports:
-      - '127.0.0.1:4000:4000'
-    depends_on:
-      - db
-      - redis
+        # streaming:
+        #   build: .
+        #   image: ghcr.io/mastodon/mastodon:v4.2.7
+        #   restart: always
+        #   env_file: .env.production
+        #   image: ghcr.io/mastodon/mastodon-streaming:v4.3.6
+        #   networks:
+        #     - external_network
+        #     - internal_network
+        #   healthcheck:
+        #     # prettier-ignore
+        #     test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
+        #   ports:
+        #     - '127.0.0.1:4000:4000'
+        #   depends_on:
+        #     - db
+        #     - redis
 
-  sidekiq:
-    # You can uncomment the following line if you want to not use the prebuilt image, for example if you have local code changes
-    # build: .
-    image: ghcr.io/mastodon/mastodon:v4.3.6
-    restart: always
-    env_file: .env.production
-    command: bundle exec sidekiq
-    depends_on:
-      - db
-      - redis
-    networks:
-      - external_network
-      - internal_network
-    volumes:
-      - ./public/system:/mastodon/public/system
-    healthcheck:
-      test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
+        # sidekiq:
+        # You can uncomment the following line if you want to not use the prebuilt image, for example if you have local code changes
+        # build: .
+        #   image: ghcr.io/mastodon/mastodon:v4.3.6
+        #   env_file: .env.production
+        #   command: bundle exec sidekiq
+        #   depends_on:
+        #     - db
+        #     - redis
+        #   networks:
+        #     - external_network
+        #     - internal_network
+        #   volumes:
+        #     - ./public/system:/mastodon/public/system
+        #   healthcheck:
+        #     test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
 
   ## Uncomment to enable federation with tor instances along with adding the following ENV variables
   ## http_hidden_proxy=http://privoxy:8118
