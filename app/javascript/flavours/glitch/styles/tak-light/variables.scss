@@ -19,6 +19,15 @@ $dark-text-color: #282c37;
 $action-button-color: #f5720a;
 // $action-button-color: #ffd700;
 
+$ui-button-background-color: $classic-secondary-color !default;
+$ui-button-focus-background-color: $classic-secondary-color !default;
+$ui-button-focus-outline-color: $classic-secondary-color !default;
+
+$ui-button-secondary-color: darken($classic-secondary-color, 10%) !default;
+$ui-button-secondary-border-color: darken($classic-secondary-color, 10%) !default;
+$ui-button-secondary-focus-color: $classic-base-color !default;
+$ui-button-secondary-focus-background-color: $ui-button-secondary-color !default;
+
 // $success-green: lighten(#3c754d, 8%);
 $success-green: $dark-text-color;
 
